@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tio Sam - Meus Trabalhos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #f5f5f5;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .logo {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 16px;
+            color: #d9d9d9;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-bottom: 3px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 140px 0 60px 0;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #d9d9d9;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+            padding: 15px;
+            background: rgba(14, 13, 13, 0.5);
+            border-radius: 10px;
+        }
+        
+        .filter-btn {
+            background: #333;
+            color: #fff;
+            border: nothing;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: #ffd700;
+            color: #000;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        figure {
+            background: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        figure:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+        }
+        
+        figure img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 3px solid #ffd700;
+            transition: transform 0.5s ease;
+        }
+        
+        figure:hover img {
+            transform: scale(1.05);
+        }
+        
+        figcaption {
+            padding: 15px;
+        }
+        
+        figcaption span {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #ffd700;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        footer {
+            background: #000;
+            color: #d9d9d9;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 3px solid #ffd700;
+        }
+        
+        footer p {
+            margin: 10px 0;
+        }
+        
+        .social-icons {
+            margin: 20px 0;
+        }
+        
+        .social-icons a {
+            color: #ffd700;
+            font-size: 24px;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: #fff;
+        }
+        
+        .whatsapp-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            padding: 0 20px;
+        }
+
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffd700;
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            gap: 10px;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #ffc400;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Ajustes para celular */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .logo {
+                font-size: 32px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .filters {
+                flex-wrap: wrap;
+                justify-content: center;
+                flex-direction: row;
+            }
+            
+            .filter-btn {
+                flex: 1 1 auto;
+                min-width: 120px;
+                margin: 5px;
+            }
+            
+            .whatsapp-button {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+            
+            .hero {
+                padding: 120px 0 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <div class="logo">TIO SAM</div>
+            <p class="tagline">Estúdio de Tatuagem - Arte na Pele</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>MEUS TRABALHOS</h1>
+            <p>Galeria dos meus trabalhos de tatuagens e artes em pele</p>
+            
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="animes">Animes</button>
+                <button class="filter-btn" data-filter="detalhadas">Detalhadas</button>
+                <button class="filter-btn" data-filter="old-school">Old School</button>
+                <button class="filter-btn" data-filter="pequenas">Pequenas</button>
+                <button class="filter-btn" data-filter="nomes">Nomes</button>
+            </div>
+        </section>
+
+        <section class="gallery">
+            <!-- As imagens serão carregadas dinamicamente via JavaScript -->
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </section>
+
+        <!-- Botão do WhatsApp entre as imagens -->
+        <div class="whatsapp-container">
+            <a href="https://wa.me/5563992035038?text=oi%20tenho%20interesse%20em%20agendar%20um%20hor%C3%A1rio" 
+               class="whatsapp-button" 
+               target="_blank" 
+               rel="noopener noreferrer">
+               <i class="fab fa-whatsapp"></i>
+               Agendar Horário
+            </a>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="social-icons">
+                <a href="https://wa.me/5563992035038?text=oi%20tenho%20interesse%20em%20agendar%20um%20hor%C3%A1rio" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/tio_sam_ink/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>Copyright © <span id="year"></span> Tio Sam Tattoo</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dados das imagens - 26 imagens no total
+        const tattooWorks = [
+            { id: 1, src: 'images/1.jpg', fullSrc: 'images/1.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 2, src: 'images/2.jpg', fullSrc: 'images/2.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 3, src: 'images/3.jpg', fullSrc: 'images/3.jpg', title: 'Old School', tags: ['old-school'] },
+            { id: 4, src: 'images/4.jpg', fullSrc: 'images/4.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 5, src: 'images/5.jpg', fullSrc: 'images/5.jpg', title: 'Anime', tags: ['animes'] },
+            { id: 6, src: 'images/6.jpg', fullSrc: 'images/6.jpg', title: 'Anime', tags: ['animes'] },
+            { id: 7, src: 'images/7.jpg', fullSrc: 'images/7.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 8, src: 'images/8.jpg', fullSrc: 'images/8.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 9, src: 'images/9.jpg', fullSrc: 'images/9.jpg', title: 'Pequena', tags: ['pequenas'] },
+            { id: 10, src: 'images/10.jpg', fullSrc: 'images/10.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 11, src: 'images/11.jpg', fullSrc: 'images/11.jpg', title: 'Anime', tags: ['animes'] },
+            { id: 12, src: 'images/12.jpg', fullSrc: 'images/12.jpg', title: 'Old School', tags: ['old-school'] },
+            { id: 13, src: 'images/13.jpg', fullSrc: 'images/13.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 14, src: 'images/14.jpg', fullSrc: 'images/14.jpg', title: 'Old School', tags: ['old-school'] },
+            { id: 15, src: 'images/15.jpg', fullSrc: 'images/15.jpg', title: 'Anime', tags: ['animes'] },
+            { id: 16, src: 'images/16.jpg', fullSrc: 'images/16.jpg', title: 'Pequena', tags: ['pequenas'] },
+            { id: 17, src: 'images/17.jpg', fullSrc: 'images/17.jpg', title: 'Anime', tags: ['animes'] },
+            { id: 18, src: 'images/18.jpg', fullSrc: 'images/18.jpg', title: 'Pequena', tags: ['pequenas'] },
+            { id: 19, src: 'images/19.jpg', fullSrc: 'images/19.jpg', title: 'Old School', tags: ['old-school'] },
+            { id: 20, src: 'images/20.jpg', fullSrc: 'images/20.jpg', title: 'Anime', tags: ['animes'] },
+            { id: 21, src: 'images/21.jpg', fullSrc: 'images/21.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 22, src: 'images/22.jpg', fullSrc: 'images/22.jpg', title: 'Detalhado', tags: ['detalhadas'] },
+            { id: 23, src: 'images/23.jpg', fullSrc: 'images/23.jpg', title: 'Nome', tags: ['nomes'] },
+            { id: 24, src: 'images/24.jpg', fullSrc: 'images/24.jpg', title: 'Anime', tags: ['animes'] },
+            { id: 25, src: 'images/25.jpg', fullSrc: 'images/25.jpg', title: 'Nome', tags: ['nomes'] },
+            { id: 26, src: 'images/26.jpg', fullSrc: 'images/26.jpg', title: 'Anime', tags: ['animes'] }
+        ];
+
+        // Configuração do header que desaparece ao rolar
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        const scrollThreshold = 50;
+
+        function handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScrollTop = scrollTop;
+        }
+
+        function loadGallery() {
+            const gallery = document.querySelector('.gallery');
+            gallery.innerHTML = '';
+            
+            tattooWorks.forEach((work) => {
+                const figure = document.createElement('figure');
+                figure.setAttribute('data-full', work.fullSrc);
+                figure.setAttribute('aria-label', `Tatuagem ${work.id}`);
+                figure.setAttribute('data-tags', work.tags.join(' '));
+                
+                figure.innerHTML = `
+                    <img src="${work.src}" alt="${work.title}" loading="lazy">
+                    <figcaption>
+                        <span>${work.title}</span>
+                        ${work.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                    </figcaption>
+                `;
+                
+                gallery.appendChild(figure);
+            });
+            
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            const figures = document.querySelectorAll('figure');
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lb-img');
+            const lbCaption = document.getElementById('lb-caption');
+            const closeBtn = document.getElementById('close');
+            const prevBtn = document.getElementById('prev');
+            const nextBtn = document.getElementById('next');
+            let currentIndex = 0;
+
+            function openLightbox(index) {
+                const figure = figures[index];
+                const src = figure.getAttribute('data-full');
+                const caption = figure.querySelector('figcaption span').textContent;
+                
+                lbImg.src = src;
+                lbImg.alt = caption;
+                lbCaption.textContent = caption;
+                lb.classList.add('open');
+                lb.setAttribute('aria-hidden', 'false');
+                currentIndex = index;
+            }
+            
+            function closeLightbox() {
+                lb.classList.remove('open');
+                lb.setAttribute('aria-hidden', 'true');
+            }
+            
+            function showPrevious() {
+                let newIndex = currentIndex - 1;
+                if (newIndex < 0) newIndex = figures.length - 1;
+                openLightbox(newIndex);
+            }
+            
+            function showNext() {
+                let newIndex = currentIndex + 1;
+                if (newIndex >= figures.length) newIndex = 0;
+                openLightbox(newIndex);
+            }
+
+            figures.forEach((figure, index) => {
+                figure.addEventListener('click', () => openLightbox(index));
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+            if (prevBtn) prevBtn.addEventListener('click', showPrevious);
+            if (nextBtn) nextBtn.addEventListener('click', showNext);
+            
+            if (lb) {
+                lb.addEventListener('click', (e) => {
+                    if (e.target === lb) closeLightbox();
+                });
+            }
+            
+            document.addEventListener('keydown', (e) => {
+                if (lb.classList.contains('open')) {
+                    if (e.key === 'Escape') closeLightbox();
+                    if (e.key === 'ArrowLeft') showPrevious();
+                    if (e.key === 'ArrowRight') showNext();
+                }
+            });
+
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    figures.forEach(fig => {
+                        if (filter === 'all') {
+                            fig.style.display = 'block';
+                        } else {
+                            const tags = fig.getAttribute('data-tags');
+                            fig.style.display = tags.includes(filter) ? 'block' : 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            loadGallery();
+            document.getElementById('year').textContent = new Date().getFullYear();
+            const loadingElement = document.querySelector('.loading');
+            if (loadingElement) {
+                loadingElement.style.display = 'none';
+            }
+        });
+    </script>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Visualização da imagem">
+        <span class="close" id="close" aria-label="Fechar">&times;</span>
+        <span class="nav prev" id="prev" aria-label="Imagem anterior">&#10094;</span>
+        <span class="nav next" id="next" aria-label="Próxima imagem">&#10095;</span>
+        <img src="" alt="" id="lb-img">
+        <p id="lb-caption"></p>
+    </div>
+</body>
+</html>
